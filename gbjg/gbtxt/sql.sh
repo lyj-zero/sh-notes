@@ -1,7 +1,7 @@
 #awk -F ' {3,8}' '{print $2",\""$3"\","$4","$5","$6}'
-USER="root"
-PASS="loveover"
-database="gbjg"
+USER=$1
+PASS=$2
+database=$3
 mysql -u $USER -p$PASS $database <<EOF
 	create table if not exists list_jd (	
 	tab VARCHAR(20),
