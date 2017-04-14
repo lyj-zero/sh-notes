@@ -1,0 +1,15 @@
+grep '^[[:space:]]\{3\}\w\{2,3\}[[:space:]]\{4\}' */*
+
+awk -F ' {3,8}' '{print $2 $3 $4 $5 $6}' *
+
+select name
+from 16nd4j
+where name REGEXP '^[^ ]{2,3}$'
+order by name;
+
+
+http://quote.tool.hexun.com/hqzx/getstock.aspx?stocklist=000001_1|399001_2&time=
+沪深A股报价
+http://quote.tool.hexun.com/hqzx/quote.aspx?type=2&market=0&sorttype=3&updown=up&page=1&count=50 (count=每页显示数量）
+个股十大流通股东年度表
+http://stockdata.stock.hexun.com/2008/accountlist.aspx?ggid=10000004&appcode=TOP10_CURRSTOCKHOLDER_DETAIL_TAB&url=/2008/sdltgd.aspx?stockid=000001

@@ -1,0 +1,17 @@
+#!/bin/bash
+USER="root"
+PASS="loveover"
+database="gbjg"
+id=$1
+jd=`mysql -u $USER -p$PASS -N $database <<EOF
+	select jd from list_jd 
+	where id=$id;
+EOF`
+echo $jd | sed 's/,/\n/g' | while read line
+do
+echo $line
+mysql -u $USER -p$PASS -N $database <<EOF
+	select * from jd$line 
+	where id=$id ;
+EOF
+done

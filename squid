@@ -1,0 +1,45 @@
+acl all src 0.0.0.0/0.0.0.0
+acl manager prot0: cache_object
+acl localhost src 127.0.0.1/255.255.255.255
+acl to_localhost dst 127.0.0.0/8
+acl SSL_ports port 443
+acl Safe_ports port 80          # http
+acl Safe_ports port 21          # ftp
+acl Safe_ports port 443         # https
+acl Safe_ports port 70          # gopher
+acl Safe_ports port 210         # wais
+acl Safe_ports port 1025-65535  # unregistered ports
+acl Safe_ports port 280         # http-mgmt
+acl Safe_ports port 488         # gss-http
+acl Safe_ports port 591         # filemaker
+acl Safe_ports port 777         # multiling http
+acl CONNECT method CONNECT
+acl LAN_NET src 192.168.0.0/24
+#acl Balck_Domain dstdomain .qq.com .tencent.com .xxxx.com #定义要拒绝的目标域
+#acl llleqal_Words urlpath_regex -l sex aduit fake #定义要过滤的内容网址
+#acl MediaFile urlpath_regex -l \.mp3$ \.mp4$ \.rmvb$ \.rm$ #定义要过滤的下载文件
+
+#reply_body_max_size 8192000 allow all #禁止下载超过8M 的文件
+
+http_access deny !Safe_ports
+http_access deny CONNECT !SSL_ports
+http_access allow localhost manager
+http_access deny manager
+#http_access deny Balck_Domain #拒绝禁止的目标域
+#http_access deny lllegal_Words #过滤包含特定内容的网址
+#http_access deny MediaFile #过滤下载的指定内容
+http_access allow LAN_NET  #允许授权的地址网段
+
+http_access allow localhost
+http_access deny all
+
+icp_access allow all
+
+http_port 192.168.0.1:3128 transparent
+
+hierarchy_stoplist cgi-bin ?
+
+iptables -t nat -I PREROUTING -i eth1 -s 192.168.0.0/24 -p tcp --dport 80 -j REDIRECT --to-ports 3128
+iptables -t nat -I POSTROUTING -s 192.168.0.0/24 -o eth0 -j SNAT --to-source 192.168.1.3
+
+
