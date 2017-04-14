@@ -1,7 +1,7 @@
 #!/bin/bash
-USER="root"
-PASS="loveover"
-database="gbjg"
+USER=$1
+PASS=$2
+database=$3
 durl="http://quote.tool.hexun.com/hqzx/quote.aspx?type=2&market=0&sorttype=3&updown=up&page=1&count=5000"
 url="http://stockdata.stock.hexun.com"
 lurl="/2008/accountlist.aspx?ggid=10000004&appcode=TOP10_CURRSTOCKHOLDER_DETAIL_TAB&url=/2008/sdltgd.aspx?stockid="
